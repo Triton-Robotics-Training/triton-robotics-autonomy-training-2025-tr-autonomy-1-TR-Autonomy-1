@@ -9,7 +9,18 @@ class SpinSolution : public rclcpp::Node {
  public:
   SpinSolution();
  private:
-    // your code here
+  void measuredPosCallback(const ArrayMsg::SharedPtr msg);
+  void measuredVelCallback(const ArrayMsg::SharedPtr msg);
+  void timerCallback();
+  rclcpp::Subscription<ArrayMsg>::SharedPtr measured_pos_subscriber_;
+  rclcpp::Subscription<ArrayMsg>::SharedPtr measured_vel_subscriber_;
+  rclcpp::Publisher<ArrayMsg>::SharedPtr predicted_pos_publisher_;
+
+  rclcpp::TimerBase::SharedPtr timer_;
+
+  ArrayMsg::SharedPtr latest_position_;
+  ArrayMsg::SharedPtr latest_velocity_;
+  rclcpp::Time last_measurement_time_;
 };
 
 #endif //YOUR_SOLUTION_SRC_SPIN_SOL_H_
